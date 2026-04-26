@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+@keyframes pulseBg {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.15); }
+    100% { filter: brightness(1); }
+}
+body {
+    font-family: "Jersey 10", cursive;
+    color: #e2e8f0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* LAYER 1 (CURRENT BG) */
+body::before,
+body::after {content: ""; position: absolute; inset: 0; z-index: -1; transition: opacity 1.5s ease-in-out;}
+/*DEFAULT BACKGROUNDS*/
+body::before {background: linear-gradient(135deg, #0f172a, #1e293b); opacity: 1;}
+body::after {background: linear-gradient(135deg, #0f172a, #1e293b); opacity: 0;}
+body.fade::after { opacity: 1;}
+
+#weather {
+    background: rgba(15, 23, 42, 0.85);
+    border: 3px solid #38bdf8;
+    border-radius: 16px;
+    padding: 30px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 0 20px #38bdf8;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+h1 {
+    position: absolute;
+    top: 40px;
+    font-size: 3rem;
+    color: #38bdf8;
+    text-shadow: 0 0 10px #38bdf8;
+}
+input {
+    font-family: "Jersey 10", cursive;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #38bdf8;
+    border-radius: 8px;
+    background: #020617;
+    color: #e2e8f0;
+    outline: none;
+    font-size: 1.2rem;
+    display: block;
+}
+button {
+    font-family: "Jersey 10", cursive;
+    width: 100%;
+    padding: 10px;
+    background: #38bdf8;
+    border: none;
+    border-radius: 8px;
+    color: #020617;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: block;
+}
+/*BUTTON HOVER*/
+button:hover {background: #0ea5e9; transform: scale(1.05); box-shadow: 0 0 10px #38bdf8;}
+/*ELEMENTS*/
+#cityName {font-size: 2rem; margin-top: 10px; color: #facc15; text-shadow: 0 0 8px #facc15;}
+#temperature {font-size: 1.5rem; margin-top: 10px;}
+#description {font-size: 1.3rem; margin-top: 5px; text-transform: capitalize;}
+#error {margin-top: 10px; font-size: 1.2rem; color: #ef4444; text-shadow: 0 0 5px #ef4444;}
