@@ -1,75 +1,136 @@
-# 🔢 Niko's Calculator
+# 🌦️ Weather App Website
 
-A project made to simply try to add as much features possible in a Calculator App, it has a slick and simple design "currently" (it will change a lot, as features get added)
+A simple and visually dynamic weather application that allows users to search for real-time weather information by city. This app uses the OpenWeather API and features smooth background transitions based on temperature.
 
-[**View Live Demo 👉**](https://nikos-calculator-app.netlify.app/)
 ---
 
-## ⚙️ How it works
+## 🚀 Features
 
-Capturing User Input - The app listens for a click event to what number you click specifically and after clicking the numbers or operations or events, it will get displayed in the display bar you can calculate it via click the "=" sign or change change the display or number based on what event you clicked (A/C, %, +/-)
+- 🔍 Search weather by city name  
+- 🌡️ Displays temperature in Celsius  
+- ☁️ Shows weather description  
+- ⚠️ Error handling for invalid input or city not found  
+- 🎨 Dynamic background gradient based on temperature  
+- ✨ Smooth animated transitions between background states  
+- 🧠 Clean and beginner-friendly code structure  
+
+---
+
+## 🛠️ Technologies Used
+
+- HTML5 – Structure of the app  
+- CSS3 – Styling, animations, and gradients  
+- JavaScript (Vanilla) – Logic and API handling  
+- OpenWeather API – Weather data source  
+- Google Fonts (Jersey 10) – Custom font styling  
+
+---
 
 ## 📂 Project Structure
-
 ```text
 calculator
 │
-|── Assets folder  # Images used in the project
+|── Assets folder  # Images used in the project(currently empty)
 ├── index.html     # Main structure of the application
 ├── styles.css     # UI Styling and containers
 └── script.js      # Core Logic
 ```
 ---
 
-## 🚧 Future updates 
-1. Polishing Updates
-    - Backspace (del) ✅ **FINISHED 04/13/26**
-    - Keyboard input support ✅ **FINISHED 04/13/26**
-    - Continuous equals (= spam behavior)  ✅ **FINISHED 04/14/26**
-    - Operator highlight  ✅ **FINISHED 04/14/26**
-    - Better error handling (division by 0, NaN)  ✅ **FINISHED 04/14/26**
-    - Disable buttons during error  ✅ **FINISHED 04/14/26**
-    - Decimal precision control  ✅ **FINISHED 04/14/26**
+## ⚙️ How It Works
 
-2. Theme Toggle - Dark Mode to Light mode button ✅ **FINISHED 04/12/26**
- 
-3. History System ✅ **FINISHED 04/16/26**
-    - Scrollable history panel  ✅ **FINISHED 04/18/26**
-    - Click history to reuse result ✅ **FINISHED 04/16/26**
-    - Clear history button ✅ **FINISHED 04/16/26**
-    - Persist history (localStorage) ✅ **FINISHED 04/16/26**
+1. User enters a city name in the input field  
+2. Clicks the **Search** button  
+3. App fetches data from the OpenWeather API  
+4. Displays:
+   - City Name  
+   - Temperature  
+   - Weather Description  
+5. Background updates based on temperature:
+   - ❄️ Cold (≤10°C) → Blue gradient  
+   - 🌿 Cool (≤20°C) → Green gradient  
+   - ☀️ Warm (≤30°C) → Orange gradient  
+   - 🔥 Hot (>30°C) → Red gradient  
 
-4. Memory System
-    - MC (clear memory) ✅ **FINISHED 04/18/26**
-    - MR (recall)  ✅ **FINISHED 04/18/26**
-    - M+ (add to memory)  ✅ **FINISHED 04/18/26**
-    - M- (subtract)  ✅ **FINISHED 04/18/26**
+---
 
-5. Expression Handling
-    - Show full expression (12 + 7 × 3) ✅ **FINISHED 04/21/26**
-    - Evaluate with proper precedence (BODMAS 👀) ✅ **FINISHED 04/21/26**
-    - Parentheses support ( ) ✅ **FINISHED 04/21/26**
+## 🔑 API Setup
 
-6. UI/UX Upgrades
-    - Button press animation ✅ **FINISHED 04/18/26**
-    - Hover glow ✅ **FINISHED 04/18/26**
-    - Smooth number transitions ✅ **FINISHED 04/18/26**
-    - Auto-resize text ✅ **FINISHED 04/18/26**
+1. Go to: https://openweathermap.org/api  
+2. Sign up and get your API key  
+3. Replace the API key in `script.js`:
 
-7. Smart Input
-    - Type full expression: ✅ **FINISHED 04/21/26**
-    -  Press enter -> evaluate ✅ **FINISHED 04/21/26**
+```javascript
+const apiKey = "YOUR_API_KEY_HERE";
+```
 
-8. Undo/Redo
-    - Undo/Redo  
-      * Ctrl+Z -> Undo ✅ **FINISHED 04/21/26**
-      * Ctrl+Y -> Redo ✅ **FINISHED 04/21/26**
-     
-9. Fun Features
-    - sound effects (click click) ✅ **FINISHED 04/21/26**
-    - glitch mode ✅ **FINISHED 04/21/26** (spam the H1 and spam it again if you want to go back)
-    - “rage mode” if user spams buttons ✅ **FINISHED 04/21/26** (just spam)
-    - random math facts ✅ **FINISHED 04/22/26** (AFK for 10 seconds)
+## 📌 Future Improvements
 
-10. Mobile Responsiveness
-    - It should look the same in Mobiles like it looks like in PC ✅ **FINISHED 04/22/26**
+1. 🌦️ Core Weather Enhancements
+    * Add feels like temperature
+    * Show humidity
+    * Show wind speed & direction
+    * Display pressure
+    * Add visibility
+    * Show UV index
+    * Add dew point
+    * Display sunrise & sunset times
+    * Add air quality index (AQI)
+    * Show chance of rain (%)\
+    * Add weather icons (from API)
+2. 📊 Forecast Features
+    * 5-day forecast
+    * Hourly forecast (next 24–48 hours)
+    * Weekly overview cards
+    * Expandable forecast sections
+    * Graphs (temperature over time)
+    * Rain probability chart
+    * Wind speed graph
+3. 📍 Detect user location (Geolocation API)
+    * “Use my location” button
+    * Save favorite cities
+    * Recently searched cities
+    * Default city on load
+    * Multiple city comparison view
+4. 🎨 UI / UX Improvements
+    * Dark / Light mode toggle
+    * Animated weather effects (rain, snow, clouds)
+    * Smooth loading skeleton UI
+    * Weather-based icons and backgrounds
+    * Responsive design improvements
+    * Card-based layout redesign
+    * Glassmorphism / neumorphism styles
+    * Custom cursor or hover effects
+5. 🌈 Advanced Visual Effects
+    * Background changes based on:
+    * Weather condition (rainy, sunny, cloudy)
+    * Time of day (day/night)
+    * Particle effects (rain, snow)
+    * Lightning animation for storms\
+    * Fog overlay for misty weather
+    * Animated sun/moon
+6. 🔔 Smart Features
+    * Weather alerts (extreme conditions)
+    * Daily weather notifications
+    * “What should I wear?” suggestion
+    * Travel weather checker
+    * Weather-based reminders
+    * Auto-refresh weather every X minutes
+7. ⚙️ Customization
+    * Switch between Celsius / Fahrenheit
+    * Custom themes
+    * Adjustable refresh rate
+    * Toggle UI elements on/off
+8. 🚀 Performance & Dev Improvements
+    * Loading spinner / skeleton
+    * Error retry system\
+    * Debounce input search
+    * API caching (localStorage)
+    * Optimize DOM updates
+    * Modular JS structure
+9. 🧪 Fun / Creative Features
+    * Weather sounds (rain, wind)
+    * Easter eggs (secret animations)
+    * Theme based on seasons
+    * “Weather mood meter”
+    * Animated mascot reacting to weather
