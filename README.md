@@ -2,6 +2,7 @@
 
 A simple and visually dynamic weather application that allows users to search for real-time weather information by city. This app uses the OpenWeather API and features smooth background transitions based on temperature.
 
+[**View Live Demo 👉**](https://nikos-weather-app.netlify.app/)
 ---
 
 ## 🚀 Features
