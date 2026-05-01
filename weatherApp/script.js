@@ -1,35 +1,34 @@
+
+// GO TO https://openweathermap.org/api abd sign up to get your API key and replace this
 const apiKey = "f37d5bb25dd2a510c04d31a694d8d329";
 
 async function getWeather() {
     const city = document.getElementById("cityInput").value;
-
     if (city === "") {
         showError("Please enter a city name");
         return;
     }
-
     try {
         const response = await fetch(
             `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
         );
-
         if (!response.ok) {
             throw new Error("City not found");
         }
-
         const data = await response.json();
         displayWeather(data);
-
     } catch (error) {
         showError(error.message);
     }
 }
 
+// WIND DIRECTIONS =)
 function getWindDirection(deg) {
     const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
     return directions[Math.round(deg / 45) % 8];
 }
 
+// DISPLAY WEATHER
 function displayWeather(data) {
     const cityName = data.name;
     const tempCelsius = data.main.temp;
@@ -39,6 +38,13 @@ function displayWeather(data) {
     const windDeg = data.wind.deg;
     const description = data.weather[0].description;
 
+    const pressure = data.main.pressure;
+    const visibility = data.visibility / 1000;
+    const { lat, lon } = data.coord;
+
+    document.getElementById("pressure").innerText = `Pressure: ${pressure} hPa`;
+    document.getElementById("visibility").innerText = `Visibility: ${visibility} km`;
+    getUVIndex(lat, lon);
     // ICON LOGIC
     const iconElement = document.getElementById("weatherIcon");
     const iconCode = data.weather[0].icon;
@@ -74,6 +80,21 @@ function displayWeather(data) {
     changeBackground(tempCelsius);
 }
 
+// UV INDEX
+async function getUVIndex(lat, lon) {
+    try {
+        const response = await fetch(
+            `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`
+        );
+        const data = await response.json();
+        const uvValue = data.list[0].main.aqi;
+        document.getElementById("uvIndex").innerText = `UV Index: ${uvValue}`;
+    } catch (error) {
+        document.getElementById("uvIndex").innerText = `UV Index: N/A`;
+    }
+}
+
+// INCASE THERES AN ERROR
 function showError(message) {
     document.getElementById("error").innerText = message;
     document.getElementById("weatherIcon").style.display = "none";
@@ -83,8 +104,12 @@ function showError(message) {
     document.getElementById("humidity").innerText = "";
     document.getElementById("wind").innerText = "";
     document.getElementById("description").innerText = "";
+    document.getElementById("pressure").innerText = "";
+    document.getElementById("visibility").innerText = "";
+    document.getElementById("uvIndex").innerText = "";
 }
 
+// CHANGING BACKGROUND COLOR BASE THE TEMPERATURE
 function changeBackground(temp) {
     const body = document.body;
     let newGradient = "";

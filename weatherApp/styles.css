@@ -1,8 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* {margin: 0; padding: 0; box-sizing: border-box;}
 @keyframes pulseBg {
     0% { filter: brightness(1); }
     50% { filter: brightness(1.15); }
@@ -18,7 +14,6 @@ body {
     overflow: hidden;
     position: relative;
 }
-
 /* LAYER 1 (CURRENT BG) */
 body::before,
 body::after {content: ""; position: absolute; inset: 0; z-index: -1; transition: opacity 1.5s ease-in-out;}
@@ -26,7 +21,6 @@ body::after {content: ""; position: absolute; inset: 0; z-index: -1; transition:
 body::before {background: linear-gradient(135deg, #0f172a, #1e293b); opacity: 1;}
 body::after {background: linear-gradient(135deg, #0f172a, #1e293b); opacity: 0;}
 body.fade::after { opacity: 1;}
-
 #weather {
     background: rgba(15, 23, 42, 0.85);
     border: 3px solid #38bdf8;
@@ -43,7 +37,7 @@ body.fade::after { opacity: 1;}
 h1 {
     position: absolute;
     top: 40px;
-    font-size: 3rem;
+    font-size: 4rem;
     color: #38bdf8;
     text-shadow: 0 0 10px #38bdf8;
 }
@@ -89,6 +83,14 @@ button:hover {background: #0ea5e9; transform: scale(1.05); box-shadow: 0 0 10px 
     border-top: 1px solid rgba(56, 189, 248, 0.3);
     font-size: 1.1rem;
 }
+.weather-details.secondary {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 5px;
+    font-size: 1rem;
+    color: #94a3b8;
+}
+#uvIndex {color: #fbbf24;}
 #feelsLike {
     font-size: 1.2rem;
     color: #94a3b8;
@@ -102,4 +104,4 @@ button:hover {background: #0ea5e9; transform: scale(1.05); box-shadow: 0 0 10px 
     margin: 0 auto 0 auto;
     filter: drop-shadow(0 0 8px #38bdf8);
     filter: invert(100%);
-}
+}/*this is getting complicated I swear to do my best*/
