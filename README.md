@@ -74,7 +74,7 @@ const apiKey = "YOUR_API_KEY_HERE";
     * Display pressure ✅ FINISHED 05/01/26
     * Add visibility ✅ FINISHED 05/01/26
     * Show UV index ✅ FINISHED 05/01/26
-    * Add dew point
+    * Add dew point **WIP TOMORROW**
     * Display sunrise & sunset times
     * Add air quality index (AQI)
     * Show chance of rain (%)\
