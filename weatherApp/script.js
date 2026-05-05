@@ -1,12 +1,13 @@
 //  GO TO https://openweathermap.org/api abd sign up to get your API key and replace this
 const apiKey = "f37d5bb25dd2a510c04d31a694d8d329";
 
-// HELPER FUNCTIONS (Load these first)
+// HELPER FUNCTIONS
 function formatTime(unix, timezone) {
     const date = new Date((unix + timezone) * 1000);
     return date.getUTCHours().toString().padStart(2, '0') + ":" +
            date.getUTCMinutes().toString().padStart(2, '0');
 }
+
 // CALCULATION
 function calculateDewPoint(temp, humidity) {
     const a = 17.27;
@@ -14,6 +15,7 @@ function calculateDewPoint(temp, humidity) {
     const alpha = ((a * temp) / (b + temp)) + Math.log(humidity / 100.0);
     return (b * alpha) / (a - alpha);
 }
+
 // WIND DIRECTIONS
 function getWindDirection(deg) {
     const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
@@ -30,6 +32,7 @@ async function getAQI(lat, lon) {
         document.getElementById("aqi").innerText = `AQI: ${aqi} (${aqiLabels[aqi]})`;
     } catch (e) { document.getElementById("aqi").innerText = "AQI: N/A"; }
 }
+
 // UV INDEX
 async function getUVIndex(lat, lon) {
     try {
@@ -53,6 +56,7 @@ async function getWeather() {
         showError(error.message);
     }
 }
+
 async function getRainChance(city) {
     try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&cnt=1&appid=${apiKey}`);
@@ -63,6 +67,7 @@ async function getRainChance(city) {
         document.getElementById("rainChance").innerText = "Rain Chance: N/A";
     }
 }
+
 function displayWeather(data) {
     const { lat, lon } = data.coord;
     const timezone = data.timezone;
@@ -95,7 +100,6 @@ function displayWeather(data) {
     const iconElement = document.getElementById("weatherIcon");
     if (iconElement) {
         const iconCode = data.weather[0].icon;
-        // This URL pulls the high-res (@2x) official icon
         iconElement.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
         iconElement.style.display = "block";
     }
@@ -103,6 +107,7 @@ function displayWeather(data) {
     getAQI(lat, lon);
     getUVIndex(lat, lon);
     changeBackground(temp);
+    getForecastData(data.name);
     update("error", "");
 }
 
@@ -122,19 +127,96 @@ function showError(message) {
     });
     const rain = document.getElementById("rainChance");
     if (rain) rain.innerText = "";
+    const forecast = document.getElementById("forecastContainer");
+    if (forecast) forecast.style.display = "none";
 }
 
 function changeBackground(temp) {
-    const newGradient = temp <= 10 ? "linear-gradient(135deg, #0ea5e9, #1e3a8a)" :
-                        temp <= 20 ? "linear-gradient(135deg, #22c55e, #065f46)" :
-                        temp <= 30 ? "linear-gradient(135deg, #f59e0b, #b45309)" :
-                        "linear-gradient(135deg, #ef4444, #7f1d1d)";
+    let color, gradient;
 
-    document.body.style.setProperty("--next-bg", newGradient);
-    document.styleSheets[0].addRule("body::after", `background: ${newGradient}`);
+    if (temp <= 10) {
+        color = "#38bdf8"; // Cold Blue
+        gradient = "linear-gradient(135deg, #0ea5e9, #1e3a8a)";
+    } else if (temp <= 20) {
+        color = "#4ade80"; // Fresh Green
+        gradient = "linear-gradient(135deg, #22c55e, #065f46)";
+    } else if (temp <= 30) {
+        color = "#fbbf24"; // Warm Amber
+        gradient = "linear-gradient(135deg, #f59e0b, #b45309)";
+    } else {
+        color = "#f87171"; // Hot Red
+        gradient = "linear-gradient(135deg, #ef4444, #7f1d1d)";
+    }
+
+    // 1. Update the CSS Variables for the whole UI
+    document.documentElement.style.setProperty('--accent-color', color);
+    document.body.style.setProperty("--next-bg", gradient);
+
+    // 2. Trigger the Fade Transition
     document.body.classList.add("fade");
+
     setTimeout(() => {
-        document.styleSheets[0].addRule("body::before", `background: ${newGradient}`);
+        // Set the current background to the new one after fade completes
+        document.styleSheets[0].addRule("body::before", `background: ${gradient}`);
         document.body.classList.remove("fade");
     }, 1500);
+}
+
+async function getForecastData(city) {
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`);
+        const data = await response.json();
+
+        const hourlyContainer = document.getElementById("hourlyForecast");
+        const dailyContainer = document.getElementById("dailyForecast");
+
+        hourlyContainer.innerHTML = "";
+        dailyContainer.innerHTML = "";
+
+        // HOURLY FORECAST (Next 24 hours = next 8 items from the API)
+        const hourlyData = data.list.slice(0, 8);
+
+        hourlyData.forEach(item => {
+            const timeObj = new Date(item.dt * 1000);
+            // Get time like "14:00"
+            const timeString = timeObj.getHours().toString().padStart(2, '0') + ":00";
+            const temp = Math.round(item.main.temp);
+            const iconCode = item.weather[0].icon;
+
+            const card = document.createElement("div");
+            card.className = "hourly-card";
+            card.innerHTML = `
+                <p>${timeString}</p>
+                <img src="https://openweathermap.org/img/wn/${iconCode}.png" alt="icon">
+                <p>${temp}°C</p>
+            `;
+            hourlyContainer.appendChild(card);
+        });
+
+        // 5-DAY OVERVIEW
+        const dailyData = data.list.filter(item => item.dt_txt.includes("12:00:00"));
+
+        dailyData.forEach(item => {
+            const dateObj = new Date(item.dt * 1000);
+            const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+            const temp = Math.round(item.main.temp);
+            const desc = item.weather[0].description;
+            const iconCode = item.weather[0].icon;
+
+            const card = document.createElement("div");
+            card.className = "daily-card";
+            card.innerHTML = `
+                <p style="width: 50px;">${dayName}</p>
+                <img src="https://openweathermap.org/img/wn/${iconCode}.png" alt="icon">
+                <p style="flex-grow: 1; text-align: center; text-transform: capitalize; font-size: 1rem; color: #94a3b8;">${desc}</p>
+                <p class="daily-temp-range">${temp}°C</p>
+            `;
+            dailyContainer.appendChild(card);
+        });
+
+        document.getElementById("forecastContainer").style.display = "block";
+
+    } catch (e) {
+        console.error("Forecast fetch failed", e);
+    }
 }
