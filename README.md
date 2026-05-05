@@ -80,9 +80,9 @@ const apiKey = "YOUR_API_KEY_HERE";
     * Show chance of rain (%)\ ✅ 05/03/26
     * Add weather icons (from API) ✅ 05/03/26
 2. 📊 Forecast Features
-    * 5-day forecast
-    * Hourly forecast (next 24–48 hours)
-    * Weekly overview cards
+    * 5-day forecast ✅ 05/05/26
+    * Hourly forecast (next 24–48 hours) ✅ 05/05/26
+    * Weekly overview cards ✅ 05/05/26
     * Expandable forecast sections
     * Graphs (temperature over time)
     * Rain probability chart
