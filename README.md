@@ -75,18 +75,18 @@ const apiKey = "YOUR_API_KEY_HERE";
     * Add visibility ✅ FINISHED 05/01/26
     * Show UV index ✅ FINISHED 05/01/26
     * Add dew point ✅ FINISHED 05/03/26
-    * Display sunrise & sunset times ✅ 05/03/26
-    * Add air quality index (AQI) ✅ 05/03/26
-    * Show chance of rain (%)\ ✅ 05/03/26
-    * Add weather icons (from API) ✅ 05/03/26
+    * Display sunrise & sunset times ✅ FINISHED 05/03/26
+    * Add air quality index (AQI) ✅ FINISHED 05/03/26
+    * Show chance of rain (%)\ ✅ FINISHED 05/03/26
+    * Add weather icons (from API) ✅ FINISHED 05/03/26
 2. 📊 Forecast Features
-    * 5-day forecast ✅ 05/05/26
-    * Hourly forecast (next 24–48 hours) ✅ 05/05/26
-    * Weekly overview cards ✅ 05/05/26
-    * Expandable forecast sections
-    * Graphs (temperature over time)
-    * Rain probability chart
-    * Wind speed graph
+    * 5-day forecast ✅ FINISHED 05/05/26
+    * Hourly forecast (next 24–48 hours) ✅ FINISHED 05/05/26
+    * Weekly overview cards ✅ FINISHED 05/05/26
+    * Expandable forecast sections ✅ FINISHED 05/05/26
+    * Graphs (temperature over time) ✅ FINISHED 05/06/26
+    * Rain probability chart ✅ FINISHED 05/06/26
+    * Wind speed graph ✅ FINISHED 05/06/26
 3. 📍 Detect user location (Geolocation API)
     * “Use my location” button
     * Save favorite cities
