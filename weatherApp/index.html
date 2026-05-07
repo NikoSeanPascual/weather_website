@@ -15,8 +15,25 @@
 <h1>Niko's Weather App</h1>
 
 <div id="weather">
-    <input type="text" id="cityInput" placeholder="Enter city name">
-    <button onclick="getWeather()">Search</button>
+
+    <div class="input-group">
+        <input type="text" id="cityInput" placeholder="Enter city name">
+        <div class="button-row">
+            <button onclick="getWeather()">Search</button>
+            <button id="locationBtn" onclick="getLocation()">📍</button>
+        </div>
+    </div>
+
+    <div id="cityLists">
+        <div class="list-section">
+            <h4>Favorites <span id="addFavorite" onclick="toggleFavorite()">★</span></h4>
+            <div id="favoritesList" class="chip-container"></div>
+        </div>
+        <div class="list-section">
+            <h4>Recent</h4>
+            <div id="recentList" class="chip-container"></div>
+        </div>
+    </div>
 
     <img id="weatherIcon" style="display:none;">
 

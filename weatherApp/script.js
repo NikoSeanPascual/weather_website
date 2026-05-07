@@ -3,6 +3,9 @@ const apiKey = "f37d5bb25dd2a510c04d31a694d8d329";
 let tempChart = null;
 let rainChart = null;
 let windChart = null;
+let favorites = JSON.parse(localStorage.getItem("weatherFavs")) || [];
+let recents = JSON.parse(localStorage.getItem("weatherRecents")) || [];
+let currentCity = "";
 
 // Configure Chart.js default text color to match your app
 Chart.defaults.color = '#e2e8f0';
@@ -76,6 +79,7 @@ async function getRainChance(city) {
 }
 
 function displayWeather(data) {
+    updateCityLists(data.name);
     const { lat, lon } = data.coord;
     const timezone = data.timezone;
     const temp = data.main.temp;
@@ -259,6 +263,7 @@ function renderCharts(labels, temps, rainProbs, windSpeeds) {
 
     // TEMPERATURE CHART
     const ctxTemp = document.getElementById('tempChart').getContext('2d');
+
     tempChart = new Chart(ctxTemp, {
         type: 'line',
         data: {
@@ -278,6 +283,7 @@ function renderCharts(labels, temps, rainProbs, windSpeeds) {
 
     // RAIN PROBABILITY CHART
     const ctxRain = document.getElementById('rainChart').getContext('2d');
+
     rainChart = new Chart(ctxRain, {
         type: 'bar',
         data: {
@@ -298,6 +304,7 @@ function renderCharts(labels, temps, rainProbs, windSpeeds) {
 
     // WIND SPEED CHART
     const ctxWind = document.getElementById('windChart').getContext('2d');
+
     windChart = new Chart(ctxWind, {
         type: 'line',
         data: {
@@ -317,3 +324,71 @@ function renderCharts(labels, temps, rainProbs, windSpeeds) {
 
     document.getElementById("chartsContainer").style.display = "block";
 }
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const { latitude, longitude } = position.coords;
+            try {
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${apiKey}`);
+                const data = await response.json();
+                displayWeather(data);
+            } catch (e) { showError("Location access denied or failed"); }
+        }, () => {
+            showError("Please enable location permissions");
+        });
+    } else {
+        showError("Geolocation not supported by browser");
+    }
+}
+function updateCityLists(city) {
+    currentCity = city;
+
+    // UPDATE RECENT (Add to start, keep unique, limit to 5)
+    recents = [city, ...recents.filter(c => c !== city)].slice(0, 5);
+    localStorage.setItem("weatherRecents", JSON.stringify(recents));
+
+    // FAVORITE ICON COLOR
+    const favBtn = document.getElementById("addFavorite");
+    favBtn.style.color = favorites.includes(city) ? "#facc15" : "#e2e8f0";
+
+    renderListUI();
+}
+
+function toggleFavorite() {
+    if (!currentCity) return;
+
+    if (favorites.includes(currentCity)) {
+        favorites = favorites.filter(c => c !== currentCity);
+
+    } else {
+        favorites.push(currentCity);
+    }
+
+    localStorage.setItem("weatherFavs", JSON.stringify(favorites));
+    updateCityLists(currentCity);
+}
+
+function renderListUI() {
+    const favContainer = document.getElementById("favoritesList");
+    const recentContainer = document.getElementById("recentList");
+
+    const createChip = (city) => {
+        const chip = document.createElement("div");
+        chip.className = "city-chip";
+        chip.innerText = city;
+        chip.onclick = () => {
+
+            document.getElementById("cityInput").value = city;
+            getWeather();
+        };
+        return chip;
+    };
+
+    favContainer.innerHTML = "";
+    favorites.forEach(city => favContainer.appendChild(createChip(city)));
+
+    recentContainer.innerHTML = "";
+    recents.forEach(city => recentContainer.appendChild(createChip(city)));
+}
+renderListUI();

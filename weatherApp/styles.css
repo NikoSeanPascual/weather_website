@@ -139,3 +139,25 @@ button:hover { filter: brightness(1.2); transform: scale(1.02); box-shadow: 0 0 
     width: 100%;
     position: relative;
 } /*this is getting complicated I swear to do my best*/
+
+/* INPUT & BUTTON LAYOUT */
+.button-row {display: flex; gap: 10px; margin-bottom: 15px;}
+#locationBtn {width: 60px; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--accent-color); color: var(--accent-color);}
+
+/* CITY LISTS */
+#cityLists {display: flex; flex-direction: column; gap: 15px; margin-bottom: 10px; text-align: left;}
+.list-section h4 {\font-size: 1rem; color: #94a3b8; margin-bottom: 5px; display: flex; justify-content: space-between;}
+#addFavorite {cursor: pointer; transition: transform 0.2s;}
+#addFavorite:hover { transform: scale(1.2); }
+.chip-container {display: flex; flex-wrap: wrap; gap: 8px;}
+
+.city-chip {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.city-chip:hover {background: var(--accent-color); color: var(--bg-dark);}
