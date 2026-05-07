@@ -88,9 +88,9 @@ const apiKey = "YOUR_API_KEY_HERE";
     * Rain probability chart ✅ FINISHED 05/06/26
     * Wind speed graph ✅ FINISHED 05/06/26
 3. 📍 Detect user location (Geolocation API)
-    * “Use my location” button
-    * Save favorite cities
-    * Recently searched cities
+    * “Use my location” button ✅ FINISHED 05/07/26 (will get improved tomorrow)
+    * Save favorite cities ✅ FINISHED 05/07/26 (will get improved tomorrow)
+    * Recently searched cities ✅ FINISHED 05/07/26 (will get improved tomorrow)
     * Default city on load
     * Multiple city comparison view
 4. 🎨 UI / UX Improvements
