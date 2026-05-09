@@ -138,7 +138,7 @@ button:hover { filter: brightness(1.2); transform: scale(1.02); box-shadow: 0 0 
     margin-bottom: 15px;
     width: 100%;
     position: relative;
-} /*this is getting complicated I swear to do my best*/
+}
 
 /* INPUT & BUTTON LAYOUT */
 .button-row {display: flex; gap: 10px; margin-bottom: 15px;}
@@ -161,3 +161,13 @@ button:hover { filter: brightness(1.2); transform: scale(1.02); box-shadow: 0 0 
     transition: all 0.2s;
 }
 .city-chip:hover {background: var(--accent-color); color: var(--bg-dark);}
+
+/* COMPARISON GRID */
+.comparison-grid {display: grid;grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-top: 10px;}
+
+.compare-card {background: rgba(15, 23, 42, 0.8); border: 1px solid var(--accent-color); border-radius: 12px; padding: 10px; text-align: center; transition: transform 0.3s ease;}
+
+.compare-card:hover { transform: translateY(-5px); }
+.compare-card h5 { color: #facc15; font-size: 1.1rem; margin-bottom: 5px; }
+.compare-card .comp-temp { font-size: 1.4rem; color: #fff; }
+.compare-card .comp-desc { font-size: 0.8rem; color: #94a3b8; text-transform: capitalize; }  /*this is getting complicated I swear to do my best*/

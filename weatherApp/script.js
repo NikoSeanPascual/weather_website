@@ -6,6 +6,7 @@ let windChart = null;
 let favorites = JSON.parse(localStorage.getItem("weatherFavs")) || [];
 let recents = JSON.parse(localStorage.getItem("weatherRecents")) || [];
 let currentCity = "";
+let defaultCity = localStorage.getItem("weatherDefaultCity") || "";
 
 // Configure Chart.js default text color to match your app
 Chart.defaults.color = '#e2e8f0';
@@ -247,6 +248,48 @@ async function getForecastData(city) {
     }
 }
 
+async function toggleComparison() {
+    const section = document.getElementById("comparisonSection");
+    const grid = document.getElementById("comparisonGrid");
+
+    if (section.style.display === "block") {
+        section.style.display = "none";
+        return;
+    }
+
+    if (favorites.length < 2) {
+        alert("Add at least 2 favorites to compare!");
+        return;
+    }
+
+    grid.innerHTML = "<p>Loading comparison...</p>";
+    section.style.display = "block";
+
+    try {
+        // Fetch all favorites simultaneously using Promise.all
+        const promises = favorites.map(city =>
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`).then(res => res.json())
+        );
+
+        const results = await Promise.all(promises);
+        grid.innerHTML = ""; // Clear loader
+
+        results.forEach(data => {
+            const card = document.createElement("div");
+            card.className = "compare-card";
+            card.innerHTML = `
+                <h5>${data.name}</h5>
+                <p class="comp-temp">${Math.round(data.main.temp)}°C</p>
+                <p class="comp-desc">${data.weather[0].description}</p>
+                <p style="font-size: 0.7rem; color: var(--accent-color)">H: ${data.main.humidity}%</p>
+            `;
+            grid.appendChild(card);
+        });
+    } catch (e) {
+        grid.innerHTML = "<p>Error loading comparison.</p>";
+    }
+}
+
 function renderCharts(labels, temps, rainProbs, windSpeeds) {
     if (tempChart) tempChart.destroy();
     if (rainChart) rainChart.destroy();
@@ -391,4 +434,32 @@ function renderListUI() {
     recentContainer.innerHTML = "";
     recents.forEach(city => recentContainer.appendChild(createChip(city)));
 }
-renderListUI();
+
+function setDefaultCity() {
+    if (!currentCity) return;
+    localStorage.setItem("weatherDefaultCity", currentCity);
+    alert(`${currentCity} set as your home city!`);
+}
+// Initialize App
+async function initApp() {
+    renderListUI();
+
+    if (defaultCity) {
+        // Load the saved home city
+        fetchWeatherByCity(defaultCity);
+    } else {
+        // Fallback: Try geolocation or leave blank
+        getLocation();
+    }
+}
+
+// Helper to fetch weather without needing the input field value
+async function fetchWeatherByCity(city) {
+    try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`);
+        if (!response.ok) return;
+        const data = await response.json();
+        displayWeather(data);
+    } catch (e) { console.error(e); }
+}
+initApp();

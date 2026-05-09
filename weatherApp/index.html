@@ -20,15 +20,21 @@
         <input type="text" id="cityInput" placeholder="Enter city name">
         <div class="button-row">
             <button onclick="getWeather()">Search</button>
-            <button id="locationBtn" onclick="getLocation()">📍</button>
+            <button id="locationBtn" onclick="getLocation()">🔴</button>
         </div>
     </div>
 
     <div id="cityLists">
         <div class="list-section">
-            <h4>Favorites <span id="addFavorite" onclick="toggleFavorite()">★</span></h4>
+            <h4>Favorites
+                <span>
+                    <span id="setDefault" title="Set current as Home" onclick="setDefaultCity()">🏠</span>
+                    <span id="addFavorite" onclick="toggleFavorite()">★</span>
+                </span>
+            </h4>
             <div id="favoritesList" class="chip-container"></div>
         </div>
+
         <div class="list-section">
             <h4>Recent</h4>
             <div id="recentList" class="chip-container"></div>
@@ -88,6 +94,14 @@
             <canvas id="windChart"></canvas>
         </div>
     </div>
+    <div id="comparisonSection" style="display: none; margin-top: 20px;">
+        <h3 class="forecast-title">City Comparison</h3>
+        <div id="comparisonGrid" class="comparison-grid">
+        </div>
+    </div>
+    <button id="compareBtn" onclick="toggleComparison()" style="margin-top: 10px; font-size: 1rem; padding: 8px;">
+        Compare Favorites
+    </button>
 
     <p id="error"></p>
 </div>
