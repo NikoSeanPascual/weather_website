@@ -96,12 +96,11 @@ const apiKey = "YOUR_API_KEY_HERE";
 4. 🎨 UI / UX Improvements 
     * Dark / Light mode toggle ✅ FINISHED 05/11/26
     * Animated weather effects (rain, snow, clouds)  ✅ FINISHED 05/11/26
-    * Smooth loading skeleton UI
-    * Weather-based icons and backgrounds
-    * Responsive design improvements
-    * Card-based layout redesign
-    * Glassmorphism / neumorphism styles
-    * Custom cursor or hover effects
+    * Smooth loading skeleton UI ✅ FINISHED 05/16/26
+    * Weather-based icons and backgrounds ✅ FINISHED 05/16/26
+    * Responsive design improvements ✅ FINISHED 05/16/26
+    * Glassmorphism / neumorphism styles ✅ FINISHED 05/16/26
+    * Custom cursor or hover effects ✅ FINISHED 05/16/26
 5. 🌈 Advanced Visual Effects
     * Background changes based on:
     * Weather condition (rainy, sunny, cloudy)
